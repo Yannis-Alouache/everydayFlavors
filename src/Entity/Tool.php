@@ -15,15 +15,15 @@ class Tool
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
 
     #[ORM\ManyToMany(targetEntity: Recipe::class, inversedBy: 'tools')]
-    private Collection $recipe;
+    private Collection $recipes;
 
     public function __construct()
     {
-        $this->recipe = new ArrayCollection();
+        $this->recipes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -36,7 +36,7 @@ class Tool
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(?string $name): static
     {
         $this->name = $name;
 
@@ -46,15 +46,15 @@ class Tool
     /**
      * @return Collection<int, Recipe>
      */
-    public function getRecipe(): Collection
+    public function getRecipes(): Collection
     {
-        return $this->recipe;
+        return $this->recipes;
     }
 
     public function addRecipe(Recipe $recipe): static
     {
-        if (!$this->recipe->contains($recipe)) {
-            $this->recipe->add($recipe);
+        if (!$this->recipes->contains($recipe)) {
+            $this->recipes->add($recipe);
         }
 
         return $this;
@@ -62,7 +62,7 @@ class Tool
 
     public function removeRecipe(Recipe $recipe): static
     {
-        $this->recipe->removeElement($recipe);
+        $this->recipes->removeElement($recipe);
 
         return $this;
     }
