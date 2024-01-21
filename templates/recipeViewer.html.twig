@@ -1,0 +1,46 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{recipe.name}}{% endblock %}
+
+{% block body %}
+<div class="bg-orange-200">
+    <div class="container mx-auto p-6 mt-20">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+
+            <h1 class="text-2xl font-bold mb-4 ">
+                {{recipe.name}}
+            </h1>
+            
+            <img class="max-w-sm mx-auto my-4 mb-4 rounded-lg shadow-md" src="{{ vich_uploader_asset(recipe, 'imageFile') }}" alt="">
+
+            <h2 class="text-xl font-semibold mb-2">Ingredients</h2>
+            <ul class="list-disc list-inside mb-4">
+                {% for ingredient in recipe.ingredients %}
+                    <li class="mb-2">
+                        <span>{{ingredient.quantity}}<span>
+                        {% if ingredient.unit is defined and ingredient.unit is not null %}
+                            <span>{{ingredient.unit}} de</span>
+                        {% endif %}
+                        <span>{{ingredient.name}}</span>
+                    </li>
+                {% endfor %}
+                <!-- Add more ingredients here -->
+            </ul>
+
+            <h2 class="text-xl font-semibold mb-2">Matériel</h2>
+            <ul class="list-disc list-inside mb-4">
+                {% for tool in recipe.tools %}
+                    <li class="mb-2">
+                        <span>{{tool.name}}<span>
+                    </li>
+                {% endfor %}
+                <!-- Add more ingredients here -->
+            </ul>
+
+            <h2 class="text-xl font-semibold mb-2">Instructions</h2>
+            <p class="mb-6">{{recipe.method|nl2br}}</p>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
